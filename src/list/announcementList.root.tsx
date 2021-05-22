@@ -1,19 +1,11 @@
 import React from 'react';
-import {connect, ConnectedProps} from "react-redux";
-import {getUsers} from "../store/users/users.selector";
-import {RootState} from "../store/store";
+import ProductsTableContainer from "./container/productsTable.container";
 
-type Props = PropsFromRedux;
-const AnnouncementList = (props: Props) => {
+const AnnouncementList = () => {
     return (
         <div>
-            List
+            <ProductsTableContainer/>
         </div>
     );
 };
-const mapStateToProps = (state: RootState) => ({
-    users: getUsers(state)
-})
-const connector = connect(mapStateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>
-export default connector(AnnouncementList)
+export default AnnouncementList
