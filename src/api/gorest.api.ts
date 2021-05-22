@@ -1,13 +1,18 @@
 import axios from "axios";
 
+interface ProductCategory {
+    id: number,
+    name: string,
+}
+
 export interface ProductApiModel {
     id: number,
     name: string,
     description: string,
     image: string,
     price: string,
+    categories: ProductCategory[],
 }
-
 export interface ResponseModel<T> {
     code: number,
     meta: {

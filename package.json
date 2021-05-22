@@ -49,6 +49,8 @@
   },
   "devDependencies": {
     "@reduxjs/toolkit": "^1.5.1",
-    "@types/react-router-dom": "^5.1.7"
+    "@types/lodash-es": "^4.17.4",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/react-table": "^7.7.1"
   }
 }
