@@ -13,7 +13,8 @@ export interface ProductApiModel {
     price: string,
     categories: ProductCategory[],
 }
-export interface ResponseModel<T> {
+
+interface ResponsePaginationModel<T> {
     code: number,
     meta: {
         pagination: {
@@ -26,8 +27,15 @@ export interface ResponseModel<T> {
     data: T[]
 }
 
+interface ResponseModel<T> {
+    code: number,
+    data: T
+}
+
 let BASIC_URL = 'https://gorest.co.in/public-api';
-const fetchProducts = () => axios.get<ResponseModel<ProductApiModel>>(BASIC_URL + '/products')
+const fetchProducts = () => axios.get<ResponsePaginationModel<ProductApiModel>>(BASIC_URL + '/products')
+const fetchProduct = (id: number) => axios.get<ResponseModel<ProductApiModel>>(`${BASIC_URL}/products/${id}`)
 export default {
-    fetchProducts
+    fetchProducts,
+    fetchProduct,
 }

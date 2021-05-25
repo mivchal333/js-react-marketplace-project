@@ -1,5 +1,5 @@
-import {bindActionCreators, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {Product} from "../../model/product";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {Product} from "../../model/product.model";
 
 interface ProductsState {
     products: Product[]
@@ -18,12 +18,16 @@ export const productSlice = createSlice({
         setProducts: (state, action: PayloadAction<Product[]>) => {
             state.products = action.payload
         },
+        addProduct: (state, action: PayloadAction<Product>) => {
+            state.products = [...state.products, action.payload]
+        },
         setIsLoading: (state, action) => {
             state.isLoading = action.payload
-        }
+        },
+
     }
 })
 
-export const {setProducts, setIsLoading} = productSlice.actions
+export const {setProducts, setIsLoading, addProduct} = productSlice.actions
 
 export default productSlice.reducer

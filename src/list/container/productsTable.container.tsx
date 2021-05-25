@@ -3,7 +3,7 @@ import {connect, ConnectedProps, useDispatch} from "react-redux";
 import {useTable} from 'react-table'
 import {RootState} from "../../store/store";
 import {getProducts, isLoading} from "../../store/products/products.selector";
-import {loadProducts} from "../service/products.service";
+import ProductService from "../../service/products.service";
 import {setIsLoading, setProducts} from "../../store/products/products.slice";
 import {columns} from "../tableConfig/columns";
 import MaUTable from '@material-ui/core/Table'
@@ -18,7 +18,7 @@ const ProductsTableContainer = (props: PropsFromRedux) => {
 
     useEffect(() => {
         dispatch(setIsLoading(true))
-        loadProducts()
+        ProductService.loadProducts()
             .then(products => {
                 dispatch(setProducts(products))
                 dispatch(setIsLoading(false))

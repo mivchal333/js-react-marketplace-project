@@ -1,13 +1,13 @@
 import {Column} from "react-table";
-import {Product} from "../../model/product";
-import PreviewImage from "../component/tableCell/previewImage.component";
+import {Product} from "../../model/product.model";
+import PreviewImage from "../container/tableCell/previewImage.container";
 
 export const columns: Column<Product>[] = [
     {
         Header: 'Image',
         accessor: 'image',
         Cell: ({row}) => (
-            <PreviewImage src={row.original.image}/>
+            <PreviewImage src={row.original.image} id={row.original.id}/>
         )
     },
     {
