@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect, ConnectedProps, useDispatch} from "react-redux";
-import {useFilters, useGlobalFilter, useTable} from 'react-table'
+import {useFilters, useGlobalFilter, usePagination, useSortBy, useTable} from 'react-table'
 import {RootState} from "../../store/store";
 import {getProducts, isLoading} from "../../store/products/products.selector";
 import ProductService from "../../service/products.service";
@@ -9,10 +9,10 @@ import {columns} from "../tableConfig/columns";
 import MaUTable from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
-import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import GlobalFilter from "./tableFilter/globalFilter";
-
+import TableHeader from "./tableHeader";
+import TableFooter from "./tableFooter";
 
 const ProductsTableContainer = (props: PropsFromRedux) => {
     const dispatch = useDispatch();
@@ -30,36 +30,30 @@ const ProductsTableContainer = (props: PropsFromRedux) => {
         getTableProps,
         getTableBodyProps,
         headerGroups,
+        page,
         rows,
         prepareRow,
         state,
         setGlobalFilter,
+        gotoPage,
+        setPageSize,
     } = useTable({
             columns,
             data: props.products,
         },
         useFilters,
         useGlobalFilter,
+        useSortBy,
+        usePagination
     )
 
     return (
-        <div><GlobalFilter globalFilter={state.globalFilter} setGlobalFilter={setGlobalFilter}/>
-
+        <div>
+            <GlobalFilter globalFilter={state.globalFilter} setGlobalFilter={setGlobalFilter}/>
             <MaUTable {...getTableProps()}>
-                <TableHead>
-                    {headerGroups.map(headerGroup => (
-                        <TableRow {...headerGroup.getHeaderGroupProps()}>
-                            {headerGroup.headers.map(column => (
-                                <TableCell {...column.getHeaderProps()}>
-                                    {column.render('Header')}
-                                    <span>{column.canFilter ? column.render('Filter') : null}</span>
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    ))}
-                </TableHead>
+                <TableHeader headerGroups={headerGroups}/>
                 <TableBody {...getTableBodyProps()}>
-                    {rows.map((row, i) => {
+                    {page.map((row, i) => {
                         prepareRow(row)
                         return (
                             <TableRow {...row.getRowProps()}>
@@ -70,6 +64,7 @@ const ProductsTableContainer = (props: PropsFromRedux) => {
                         )
                     })}
                 </TableBody>
+                <TableFooter state={state} rowsLength={rows.length} gotoPage={gotoPage} setPageSize={setPageSize}/>
             </MaUTable>
         </div>
     )
