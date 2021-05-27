@@ -5,13 +5,11 @@ import {RootState} from "../../store/store";
 import {getProducts, isLoading} from "../../store/products/products.selector";
 import {columns} from "../tableConfig/columns";
 import MaUTable from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableRow from '@material-ui/core/TableRow'
 import GlobalFilter from "./tableFilter/globalFilter";
 import TableHeader from "./tableHeader";
 import TableFooter from "./tableFooter";
 import CategoryField from "./categoryField";
+import TableBody from "./tableBody";
 
 const ProductsTableContainer = (props: PropsFromRedux) => {
 
@@ -40,29 +38,15 @@ const ProductsTableContainer = (props: PropsFromRedux) => {
         useSortBy,
         usePagination
     )
-    console.log(page.map(page => page.original.categories))
-    console.log('f', state.filters)
-
     return (
         <div>
-            <div style={{display: "flex"}}>
+            <div style={{display: "flex", alignItems: "center"}}>
                 <GlobalFilter globalFilter={state.globalFilter} setGlobalFilter={setGlobalFilter}/>
                 <CategoryField setFilter={setFilter}/>
             </div>
             <MaUTable {...getTableProps()}>
                 <TableHeader headerGroups={headerGroups}/>
-                <TableBody {...getTableBodyProps()}>
-                    {page.map((row, i) => {
-                        prepareRow(row)
-                        return (
-                            <TableRow {...row.getRowProps()}>
-                                {row.cells.map(cell => {
-                                    return <TableCell {...cell.getCellProps()}>{cell.render('Cell')}</TableCell>
-                                })}
-                            </TableRow>
-                        )
-                    })}
-                </TableBody>
+                <TableBody page={page} getTableBodyProps={getTableBodyProps} prepareRow={prepareRow}/>
                 <TableFooter state={state} rowsLength={rows.length} gotoPage={gotoPage} setPageSize={setPageSize}/>
             </MaUTable>
         </div>

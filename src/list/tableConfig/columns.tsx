@@ -4,6 +4,8 @@ import PreviewImage from "../container/tableCell/previewImage.container";
 import DefaultFilter from "../container/tableFilter/defaultFilter";
 import NumberRangeColumnFilter from "../container/tableFilter/numberRangeColumnFilter";
 import {categoriesFilterFunc} from "./categoriesFilterFunc";
+import ProductName from "../container/tableCell/productName";
+import PriceLabel from "../container/tableCell/priceLabel";
 
 export const columns: Column<Product>[] = [
     {
@@ -19,12 +21,14 @@ export const columns: Column<Product>[] = [
     {
         Header: 'Name',
         accessor: 'name',
+        Cell: ({row}) => (<ProductName product={row.original}/>),
         Filter: DefaultFilter
     },
     {
         Header: 'Price',
         accessor: 'price',
         Filter: NumberRangeColumnFilter,
+        Cell: ({row}) => (<PriceLabel product={row.original}/>),
         filter: 'between',
     },
     {

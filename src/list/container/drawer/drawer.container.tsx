@@ -135,7 +135,7 @@ const DrawerContainer = (props: PropsType) => {
                 <Divider/>
                 <DrawerActionsContainer/>
             </Drawer>
-            <main>
+            <main style={{width: "100%"}}>
                 <div className={classes.appBarSpacer}/>
 
                 {props.children}
