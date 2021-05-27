@@ -13,6 +13,7 @@ export const columns: Column<Product>[] = [
         ),
         disableFilters: true,
         disableGlobalFilter: true,
+        disableSortBy: true,
     },
     {
         Header: 'Name',
