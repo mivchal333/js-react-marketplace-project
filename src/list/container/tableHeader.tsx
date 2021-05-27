@@ -18,6 +18,7 @@ const TableHeader = ({headerGroups}: PropTypes) => (
                     <TableCell {...column.getHeaderProps(column.getSortByToggleProps())}>
                         {column.render('Header')}
                         <TableSortLabel
+                            hideSortIcon={column.disableFilters}
                             active={column.isSorted}
                             direction={column.isSortedDesc ? 'desc' : 'asc'}
                         />
