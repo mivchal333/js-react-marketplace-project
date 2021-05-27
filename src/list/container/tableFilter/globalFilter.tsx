@@ -19,8 +19,11 @@ const GlobalFilter = (
                        onChange(event.target.value);
                        setValue(event.target.value)
                    }}
+                   style={{
+                       margin: "1em",
+                       width: "30em"
+                   }}
         />
-
     )
 };
 export default GlobalFilter

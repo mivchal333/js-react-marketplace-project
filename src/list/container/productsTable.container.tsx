@@ -1,10 +1,8 @@
-import React, {useEffect} from 'react';
-import {connect, ConnectedProps, useDispatch} from "react-redux";
+import React from 'react';
+import {connect, ConnectedProps} from "react-redux";
 import {useFilters, useGlobalFilter, usePagination, useSortBy, useTable} from 'react-table'
 import {RootState} from "../../store/store";
 import {getProducts, isLoading} from "../../store/products/products.selector";
-import ProductService from "../../service/products.service";
-import {setIsLoading, setProducts} from "../../store/products/products.slice";
 import {columns} from "../tableConfig/columns";
 import MaUTable from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -13,18 +11,10 @@ import TableRow from '@material-ui/core/TableRow'
 import GlobalFilter from "./tableFilter/globalFilter";
 import TableHeader from "./tableHeader";
 import TableFooter from "./tableFooter";
+import CategoryField from "./categoryField";
 
 const ProductsTableContainer = (props: PropsFromRedux) => {
-    const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(setIsLoading(true))
-        ProductService.loadProducts()
-            .then(products => {
-                dispatch(setProducts(products))
-                dispatch(setIsLoading(false))
-            })
-    }, [])
 
     const {
         getTableProps,
@@ -37,19 +27,28 @@ const ProductsTableContainer = (props: PropsFromRedux) => {
         setGlobalFilter,
         gotoPage,
         setPageSize,
+        setFilter
     } = useTable({
             columns,
             data: props.products,
+            initialState: {
+                hiddenColumns: ["categories"]
+            }
         },
         useFilters,
         useGlobalFilter,
         useSortBy,
         usePagination
     )
+    console.log(page.map(page => page.original.categories))
+    console.log('f', state.filters)
 
     return (
         <div>
-            <GlobalFilter globalFilter={state.globalFilter} setGlobalFilter={setGlobalFilter}/>
+            <div style={{display: "flex"}}>
+                <GlobalFilter globalFilter={state.globalFilter} setGlobalFilter={setGlobalFilter}/>
+                <CategoryField setFilter={setFilter}/>
+            </div>
             <MaUTable {...getTableProps()}>
                 <TableHeader headerGroups={headerGroups}/>
                 <TableBody {...getTableBodyProps()}>

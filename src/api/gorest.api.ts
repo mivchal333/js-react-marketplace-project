@@ -32,10 +32,23 @@ interface ResponseModel<T> {
     data: T
 }
 
+interface CategoryApiModel {
+    id: number,
+    name: string,
+    description: string,
+    status: boolean,
+}
+
 let BASIC_URL = 'https://gorest.co.in/public-api';
 const fetchProducts = () => axios.get<ResponsePaginationModel<ProductApiModel>>(BASIC_URL + '/products')
+
 const fetchProduct = (id: number) => axios.get<ResponseModel<ProductApiModel>>(`${BASIC_URL}/products/${id}`)
-export default {
+
+const fetchCategories = () => axios.get<ResponsePaginationModel<CategoryApiModel>>(BASIC_URL + '/categories')
+
+const GorestRepository = {
     fetchProducts,
     fetchProduct,
-}
+    fetchCategories
+};
+export default GorestRepository

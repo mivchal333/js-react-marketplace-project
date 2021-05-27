@@ -93,10 +93,6 @@ const TableFooter = ({state, rowsLength, gotoPage, setPageSize}: PropTypes) => (
                 count={rowsLength}
                 rowsPerPage={state.pageSize}
                 page={state.pageIndex}
-                SelectProps={{
-                    inputProps: {'aria-label': 'rows per page'},
-                    native: true,
-                }}
                 onChangePage={(event, newPage) => {
                     gotoPage(newPage)
                 }}

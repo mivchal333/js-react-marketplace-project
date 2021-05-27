@@ -2,25 +2,14 @@ import React from "react";
 import {TextField} from "@material-ui/core";
 
 function NumberRangeColumnFilter({
-                                     column: {filterValue = [], preFilteredRows, setFilter, id},
+                                     column: {filterValue = [], setFilter},
                                  }: any) {
-    const [min, max] = React.useMemo(() => {
-        let min = preFilteredRows.length ? preFilteredRows[0].values[id] : 0
-        let max = preFilteredRows.length ? preFilteredRows[0].values[id] : 0
-        preFilteredRows.forEach((row: any) => {
-            min = Math.min(row.values[id], min)
-            max = Math.max(row.values[id], max)
-        })
-        return [min, max]
-    }, [id, preFilteredRows])
-
     return (
         <div
             style={{
                 display: 'flex',
             }}
         >
-
             <TextField
                 value={filterValue[0] || ''}
                 type="number"
@@ -28,7 +17,7 @@ function NumberRangeColumnFilter({
                     const val = e.target.value
                     setFilter((old = []) => [val ? parseInt(val, 10) : undefined, old[1]])
                 }}
-                placeholder={`Min (${min})`}
+                placeholder={`Min`}
                 style={{
                     width: '100px',
                     marginRight: '0.5rem',
@@ -42,7 +31,7 @@ function NumberRangeColumnFilter({
                     const val = e.target.value
                     setFilter((old = []) => [old[0], val ? parseInt(val, 10) : undefined])
                 }}
-                placeholder={`Max (${max})`}
+                placeholder={`Max`}
                 style={{
                     width: '100px',
                     marginLeft: '0.5rem',

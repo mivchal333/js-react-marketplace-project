@@ -3,6 +3,7 @@ import {Product} from "../../model/product.model";
 import PreviewImage from "../container/tableCell/previewImage.container";
 import DefaultFilter from "../container/tableFilter/defaultFilter";
 import NumberRangeColumnFilter from "../container/tableFilter/numberRangeColumnFilter";
+import {categoriesFilterFunc} from "./categoriesFilterFunc";
 
 export const columns: Column<Product>[] = [
     {
@@ -25,5 +26,10 @@ export const columns: Column<Product>[] = [
         accessor: 'price',
         Filter: NumberRangeColumnFilter,
         filter: 'between',
+    },
+    {
+        id: "categories",
+        accessor: "categories",
+        filter: categoriesFilterFunc,
     }
 ]
