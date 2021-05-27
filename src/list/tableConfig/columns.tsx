@@ -12,6 +12,7 @@ export const columns: Column<Product>[] = [
             <PreviewImage src={row.original.image} id={row.original.id}/>
         ),
         disableFilters: true,
+        disableGlobalFilter: true,
     },
     {
         Header: 'Name',

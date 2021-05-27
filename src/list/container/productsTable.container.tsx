@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect, ConnectedProps, useDispatch} from "react-redux";
-import {useFilters, useTable} from 'react-table'
+import {useFilters, useGlobalFilter, useTable} from 'react-table'
 import {RootState} from "../../store/store";
 import {getProducts, isLoading} from "../../store/products/products.selector";
 import ProductService from "../../service/products.service";
@@ -11,6 +11,7 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
+import GlobalFilter from "./tableFilter/globalFilter";
 
 
 const ProductsTableContainer = (props: PropsFromRedux) => {
@@ -31,40 +32,46 @@ const ProductsTableContainer = (props: PropsFromRedux) => {
         headerGroups,
         rows,
         prepareRow,
+        state,
+        setGlobalFilter,
     } = useTable({
             columns,
             data: props.products,
         },
         useFilters,
+        useGlobalFilter,
     )
 
     return (
-        <MaUTable {...getTableProps()}>
-            <TableHead>
-                {headerGroups.map(headerGroup => (
-                    <TableRow {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map(column => (
-                            <TableCell {...column.getHeaderProps()}>
-                                {column.render('Header')}
-                                <div>{column.canFilter ? column.render('Filter') : null}</div>
-                            </TableCell>
-                        ))}
-                    </TableRow>
-                ))}
-            </TableHead>
-            <TableBody {...getTableBodyProps()}>
-                {rows.map((row, i) => {
-                    prepareRow(row)
-                    return (
-                        <TableRow {...row.getRowProps()}>
-                            {row.cells.map(cell => {
-                                return <TableCell {...cell.getCellProps()}>{cell.render('Cell')}</TableCell>
-                            })}
+        <div><GlobalFilter globalFilter={state.globalFilter} setGlobalFilter={setGlobalFilter}/>
+
+            <MaUTable {...getTableProps()}>
+                <TableHead>
+                    {headerGroups.map(headerGroup => (
+                        <TableRow {...headerGroup.getHeaderGroupProps()}>
+                            {headerGroup.headers.map(column => (
+                                <TableCell {...column.getHeaderProps()}>
+                                    {column.render('Header')}
+                                    <span>{column.canFilter ? column.render('Filter') : null}</span>
+                                </TableCell>
+                            ))}
                         </TableRow>
-                    )
-                })}
-            </TableBody>
-        </MaUTable>
+                    ))}
+                </TableHead>
+                <TableBody {...getTableBodyProps()}>
+                    {rows.map((row, i) => {
+                        prepareRow(row)
+                        return (
+                            <TableRow {...row.getRowProps()}>
+                                {row.cells.map(cell => {
+                                    return <TableCell {...cell.getCellProps()}>{cell.render('Cell')}</TableCell>
+                                })}
+                            </TableRow>
+                        )
+                    })}
+                </TableBody>
+            </MaUTable>
+        </div>
     )
 }
 
