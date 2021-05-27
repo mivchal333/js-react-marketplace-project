@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect, ConnectedProps, useDispatch} from "react-redux";
-import {useTable} from 'react-table'
+import {useFilters, useTable} from 'react-table'
 import {RootState} from "../../store/store";
 import {getProducts, isLoading} from "../../store/products/products.selector";
 import ProductService from "../../service/products.service";
@@ -32,9 +32,11 @@ const ProductsTableContainer = (props: PropsFromRedux) => {
         rows,
         prepareRow,
     } = useTable({
-        columns,
-        data: props.products,
-    })
+            columns,
+            data: props.products,
+        },
+        useFilters,
+    )
 
     return (
         <MaUTable {...getTableProps()}>
@@ -42,7 +44,10 @@ const ProductsTableContainer = (props: PropsFromRedux) => {
                 {headerGroups.map(headerGroup => (
                     <TableRow {...headerGroup.getHeaderGroupProps()}>
                         {headerGroup.headers.map(column => (
-                            <TableCell {...column.getHeaderProps()}>{column.render('Header')}</TableCell>
+                            <TableCell {...column.getHeaderProps()}>
+                                {column.render('Header')}
+                                <div>{column.canFilter ? column.render('Filter') : null}</div>
+                            </TableCell>
                         ))}
                     </TableRow>
                 ))}
