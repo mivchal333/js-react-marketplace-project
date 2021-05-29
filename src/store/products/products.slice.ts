@@ -24,10 +24,16 @@ export const productSlice = createSlice({
         setIsLoading: (state, action) => {
             state.isLoading = action.payload
         },
+        editProduct: (state, action: PayloadAction<Product>) => {
+            state.products = [...state.products.filter(item => item.id !== action.payload.id), action.payload]
+        },
+        deleteProduct: (state, action: PayloadAction<number>) => {
+            state.products = state.products.filter(item => item.id !== action.payload)
+        }
 
     }
 })
 
-export const {setProducts, setIsLoading, addProduct} = productSlice.actions
+export const {setProducts, setIsLoading, addProduct, editProduct, deleteProduct} = productSlice.actions
 
 export default productSlice.reducer
