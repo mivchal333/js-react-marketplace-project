@@ -84,24 +84,29 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
     );
 }
 
-const TableFooter = ({state, rowsLength, gotoPage, setPageSize}: PropTypes) => (
-    <MaterialTableFooter>
-        <TableRow>
-            <TablePagination
-                rowsPerPageOptions={[5, 10, 25, {label: 'All', value: -1}]}
-                colSpan={3}
-                count={rowsLength}
-                rowsPerPage={state.pageSize}
-                page={state.pageIndex}
-                onChangePage={(event, newPage) => {
-                    gotoPage(newPage)
-                }}
-                onChangeRowsPerPage={(event) => {
-                    setPageSize(toNumber(event.target.value))
-                }}
-                ActionsComponent={TablePaginationActions}
-            />
-        </TableRow>
-    </MaterialTableFooter>
-)
+const TableFooter = ({state, rowsLength, gotoPage, setPageSize}: PropTypes) => {
+    const rowsPerPageOptions = [5, 10, 25];
+    return (
+        <MaterialTableFooter>
+            <TableRow>
+                {rowsLength > rowsPerPageOptions[0] && (
+                    <TablePagination
+                        rowsPerPageOptions={rowsPerPageOptions}
+                        colSpan={3}
+                        count={rowsLength}
+                        rowsPerPage={state.pageSize}
+                        page={state.pageIndex}
+                        onChangePage={(event, newPage) => {
+                            gotoPage(newPage)
+                        }}
+                        onChangeRowsPerPage={(event) => {
+                            setPageSize(toNumber(event.target.value))
+                        }}
+                        ActionsComponent={TablePaginationActions}
+                    />
+                )}
+            </TableRow>
+        </MaterialTableFooter>
+    );
+}
 export default TableFooter;

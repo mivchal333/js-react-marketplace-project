@@ -9,7 +9,7 @@ interface PropsType {
 const PreviewImage = (props: PropsType) => {
     return (
         <Link to={`/product/${props.id}`}>
-            <img src={props.src} alt="product-image" width={100} height={100}/>
+            <img src={props.src} alt="product-image" width={75} height={75}/>
         </Link>
     )
 }

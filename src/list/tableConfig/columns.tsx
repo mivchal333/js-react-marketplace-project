@@ -9,7 +9,7 @@ import PriceLabel from "../container/tableCell/priceLabel";
 
 export const columns: Column<Product>[] = [
     {
-        Header: 'Image',
+        Header: '',
         accessor: 'image',
         Cell: ({row}) => (
             <PreviewImage src={row.original.image} id={row.original.id}/>
