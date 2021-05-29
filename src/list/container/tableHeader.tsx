@@ -15,13 +15,15 @@ const TableHeader = ({headerGroups}: PropTypes) => (
         {headerGroups.map(headerGroup => (
             <TableRow {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map(column => (
-                    <TableCell {...column.getHeaderProps(column.getSortByToggleProps())}>
-                        {column.render('Header')}
-                        <TableSortLabel
-                            hideSortIcon={column.disableFilters}
-                            active={column.isSorted}
-                            direction={column.isSortedDesc ? 'desc' : 'asc'}
-                        />
+                    <TableCell>
+                        <div {...column.getHeaderProps(column.getSortByToggleProps())}>
+                            {column.render('Header')}
+                            <TableSortLabel
+                                hideSortIcon={column.disableFilters}
+                                active={column.isSorted}
+                                direction={column.isSortedDesc ? 'desc' : 'asc'}
+                            />
+                        </div>
                         <div>{column.canFilter ? column.render('Filter') : null}</div>
                     </TableCell>
                 ))}

@@ -13,7 +13,6 @@ import TableBody from "./tableBody";
 
 const ProductsTableContainer = (props: PropsFromRedux) => {
 
-
     const {
         getTableProps,
         getTableBodyProps,

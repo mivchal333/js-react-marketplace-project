@@ -42,23 +42,18 @@ interface CategoryApiModel {
 let BASIC_URL = 'https://gorest.co.in/public-api';
 const API_KEY = process.env.REACT_APP_GOREST_API_KEY;
 
-const fetchProducts = () => axios.get<ResponsePaginationModel<ProductApiModel>>(BASIC_URL + '/products', {
-    params: {
-        'access-token': API_KEY
+const gorestInstance = axios.create({
+    baseURL: BASIC_URL,
+    headers: {
+        Authorization: `Bearer ${API_KEY}`
     }
-})
+});
 
-const fetchProduct = (id: number) => axios.get<ResponseModel<ProductApiModel>>(`${BASIC_URL} / products /${id}`, {
-    params: {
-        'access-token': API_KEY
-    }
-})
+const fetchProducts = () => gorestInstance.get<ResponsePaginationModel<ProductApiModel>>('/products')
 
-const fetchCategories = () => axios.get<ResponsePaginationModel<CategoryApiModel>>(BASIC_URL + '/categories', {
-    params: {
-        'access-token': API_KEY
-    }
-})
+const fetchProduct = (id: number) => gorestInstance.get<ResponseModel<ProductApiModel>>(`/products /${id}`)
+
+const fetchCategories = () => gorestInstance.get<ResponsePaginationModel<CategoryApiModel>>('/categories')
 
 const GorestRepository = {
     fetchProducts,
