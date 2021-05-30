@@ -13,6 +13,7 @@ import {setSelectedAnnouncement} from "../store/page/page.slice";
 import {Product} from "../model/product.model"
 import { Alert } from '@material-ui/lab';
 import { Snackbar } from '@material-ui/core';
+import {ProductApiModel, ProductCategory } from '../api/gorest.api';
 
 const AnnouncementEdit = (props: PropsFromRedux) => {
     const {announcement, selectedAnnouncementId} = props
@@ -21,32 +22,22 @@ const AnnouncementEdit = (props: PropsFromRedux) => {
     const [open, setOpen] = React.useState(false);
     const [message, setMessage] = React.useState("");
 
-    const handleSubmit = (name:string, description:string, image:string, price:number, categories: number[]) =>{
+    const handleSubmit = (name:string, description:string, image:string, price:number, categories: ProductCategory[]) =>{
         if(announcement){
-            let myAnnouncement: Product ={
+            let myAnnouncement: ProductApiModel ={
                 id: announcement.id,
                 name: name,
                 description: description,
                 image: image,
-                price: price,
+                price: String(price),
                 categories: categories
             };
-            dispatch(editProduct(myAnnouncement));
-            setMessage("Successfully edited!");
-            setOpen(true);
-        }else{
-            let id = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
-            let myAnnouncement: Product ={
-                id: id,
-                name: name,
-                description: description,
-                image: image,
-                price: price,
-                categories: categories
-            };
-            dispatch(addProduct(myAnnouncement));
-            setMessage("Added successfully");
-            setOpen(true);
+            ProductService.updateProduct(announcement.id, myAnnouncement)
+                .then(r => {
+                    dispatch(addProduct(r))
+                    setMessage("Successfully edited!");
+                    setOpen(true);
+                })
         }
     }
     useEffect(() => {
@@ -63,7 +54,7 @@ const AnnouncementEdit = (props: PropsFromRedux) => {
     return (
         <>
             <Link to="/">Home</Link>
-            <FormComponent buttonLabel={"Edit"} announcement={props.announcement} handleSubmit={handleSubmit}/>
+            <FormComponent buttonLabel="Edit" announcement={props.announcement} handleSubmit={handleSubmit}/>
             <Snackbar open={open} autoHideDuration={6000}>
                 <Alert  severity="success">
                     {message}

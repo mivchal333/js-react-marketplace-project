@@ -1,6 +1,7 @@
 import axios from "axios";
+import { Product } from "../model/product.model";
 
-interface ProductCategory {
+export interface ProductCategory {
     id: number,
     name: string,
 }
@@ -12,6 +13,15 @@ export interface ProductApiModel {
     image: string,
     price: string,
     categories: ProductCategory[],
+}
+
+export interface CreateProductApiModel {
+    name: string,
+    description: string,
+    image: string,
+    price: string,
+    categories: ProductCategory[],
+    status: boolean
 }
 
 interface ResponsePaginationModel<T> {
@@ -53,11 +63,17 @@ const fetchProducts = () => gorestInstance.get<ResponsePaginationModel<ProductAp
 
 const fetchProduct = (id: number) => gorestInstance.get<ResponseModel<ProductApiModel>>(`/products /${id}`)
 
+const addProduct = (product: CreateProductApiModel) => gorestInstance.post<ResponseModel<ProductApiModel>>(`/products`, product)
+
+const updateProduct = (id: number, product: ProductApiModel) => gorestInstance.put(`/products /${id}`, product)
+
 const fetchCategories = () => gorestInstance.get<ResponsePaginationModel<CategoryApiModel>>('/categories')
 
 const GorestRepository = {
     fetchProducts,
     fetchProduct,
+    addProduct,
+    updateProduct,
     fetchCategories
 };
 export default GorestRepository

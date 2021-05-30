@@ -1,6 +1,7 @@
 import {Product} from "../model/product.model";
-import gorestRepository, {ProductApiModel} from '../api/gorest.api'
+import gorestRepository, {CreateProductApiModel, ProductApiModel} from '../api/gorest.api'
 import {map} from 'lodash-es'
+import { AxiosResponse } from "axios";
 
 const loadProducts = async (): Promise<Product[]> => {
     const {data} = await gorestRepository.fetchProducts()
@@ -22,8 +23,20 @@ const loadProduct = async (id: number): Promise<Product> => {
     return mapToProductAppModel(data.data)
 }
 
+const addProduct = async (product: CreateProductApiModel): Promise<Product> =>{
+    const data = await gorestRepository.addProduct(product);
+    return  mapToProductAppModel(data.data.data);
+}
+
+const updateProduct = async (id: number, product: ProductApiModel): Promise<Product> =>{
+    const data = await gorestRepository.updateProduct(id, product);
+    return  mapToProductAppModel(data.data.data);
+}
+
 const ProductService = {
     loadProducts,
-    loadProduct
+    loadProduct,
+    addProduct,
+    updateProduct
 };
 export default ProductService

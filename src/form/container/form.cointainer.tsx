@@ -10,9 +10,10 @@ import CategoriesService from "../../service/categories.service";
 import {setCategories, setIsLoading as setIsCategoriesLoading} from "../../store/categories/categories.slice";
 import {isEmpty} from "lodash-es";
 import {store} from "../../store/store"
+import {ProductCategory} from "../../api/gorest.api"
 
 interface IProps {
-    handleSubmit: (name:string, description:string, image:string, price:number, categories: number[]) => void,
+    handleSubmit: (name:string, description:string, image:string, price:number, categories: ProductCategory[]) => void,
     buttonLabel: string,
     categories: Category[],
     announcement?: Product
@@ -24,7 +25,7 @@ interface IState {
     image: string,
     price: number,
     categories: Category[],
-    selectedCategory: Category[],
+    selectedCategories: Category[],
     name_error: boolean,
     name_error_text: string,
     description_error: boolean,
@@ -43,7 +44,7 @@ const initialState = {
     image: "",
     price: 0,
     categories: [],
-    selectedCategory: [],
+    selectedCategories: [],
     name_error: false,
     name_error_text: "",
     description_error: false,
@@ -67,9 +68,9 @@ class FormComponent extends Component<IProps, IState> {
         if(!this.validate()){
             return;
         }
-        let categories: number[] = [];
-        for (let category of this.state.selectedCategory) {
-            categories.push(category.id)
+        let categories: ProductCategory[] = [];
+        for (let category of this.state.selectedCategories) {
+            categories.push({id: category.id, name: category.name})
         }
         this.props.handleSubmit(this.state.name, this.state.description, this.state.image, this.state.price, categories);
     }
@@ -88,7 +89,7 @@ class FormComponent extends Component<IProps, IState> {
                 description: this.props.announcement.description,
                 image: this.props.announcement.image,
                 price: this.props.announcement.price,
-                selectedCategory: categories,
+                selectedCategories: categories,
             })
         }
     }
@@ -158,7 +159,7 @@ class FormComponent extends Component<IProps, IState> {
             })
             return false;
         }
-        if(this.state.selectedCategory.length === 0){
+        if(this.state.selectedCategories.length === 0){
             this.setState({
                 category_error: true,
                 category_error_text: "The field cannot be empty!"
@@ -179,7 +180,7 @@ class FormComponent extends Component<IProps, IState> {
 
     handleAutocomplete(e: Category[]){
         this.setState({
-            selectedCategory: e
+            selectedCategories: e
         })
     }
     render() {
@@ -213,7 +214,7 @@ class FormComponent extends Component<IProps, IState> {
                     multiple
                     options={this.props.categories}
                     getOptionLabel={(option) => option.name}
-                    value={this.state.selectedCategory}
+                    value={this.state.selectedCategories}
                     filterSelectedOptions
                     onChange={(event, newValue) => {
                         this.handleAutocomplete(newValue)

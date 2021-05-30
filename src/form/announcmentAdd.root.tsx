@@ -13,6 +13,8 @@ import {setSelectedAnnouncement} from "../store/page/page.slice";
 import { Product } from '../model/product.model';
 import { Snackbar } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
+import { CreateProductApiModel } from '../api/gorest.api';
+import {ProductCategory} from "../api/gorest.api"
 
 const AnnouncmentAdd = (props: PropsFromRedux) => {
     const {announcement, selectedAnnouncementId} = props
@@ -21,19 +23,17 @@ const AnnouncmentAdd = (props: PropsFromRedux) => {
     const [open, setOpen] = React.useState(false);
     const [message, setMessage] = React.useState("");
 
-    const handleSubmit = (name:string, description:string, image:string, price:number, categories: number[]) =>{
-        let id = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
-        let myAnnouncement: Product ={
-            id: id,
+    const handleSubmit = (name:string, description:string, image:string, price:number, categories: ProductCategory[]) =>{
+        let myAnnouncement: CreateProductApiModel ={
             name: name,
             description: description,
             image: image,
-            price: price,
-            categories: categories
+            price: String(price),
+            categories: categories,
+            status: true
         };
-        dispatch(addProduct(myAnnouncement))
-        setMessage("Successfully edited!");
-        setOpen(true);
+        ProductService.addProduct(myAnnouncement)
+            .then(r => dispatch(addProduct(r)))
     }
 
     useEffect(() => {
@@ -50,7 +50,7 @@ const AnnouncmentAdd = (props: PropsFromRedux) => {
     return (
         <>
             <Link to="/">Home</Link>
-            <FormComponent buttonLabel={"Add"} announcement={props.announcement} handleSubmit={handleSubmit}/>
+            <FormComponent buttonLabel="Add" announcement={props.announcement} handleSubmit={handleSubmit}/>
             <Snackbar open={open} autoHideDuration={6000}>
                 <Alert  severity="success">
                     {message}
