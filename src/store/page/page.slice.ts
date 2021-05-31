@@ -12,12 +12,12 @@ export const pageSlice = createSlice({
     name: 'page',
     initialState,
     reducers: {
-        setSelectedAnnouncement: (state, action: PayloadAction<number>) => {
+        setSelectedProductId: (state, action: PayloadAction<number>) => {
             state.selectedAnnouncementId = action.payload
         },
     }
 })
 
-export const {setSelectedAnnouncement} = pageSlice.actions
+export const {setSelectedProductId} = pageSlice.actions
 
 export default pageSlice.reducer

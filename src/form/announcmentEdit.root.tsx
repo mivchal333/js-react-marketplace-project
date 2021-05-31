@@ -1,75 +1,81 @@
-import React, { Component, useEffect, useRef } from 'react';
+import React, {useEffect} from 'react';
 import {connect, ConnectedProps, useDispatch} from "react-redux";
-import { getSelectedAnnouncementId } from '../store/page/page.selector';
-import { RootState } from '../store/store';
+import {RootState} from '../store/store';
 import FormComponent from './container/form.cointainer'
-import {getSelectedProduct, } from "../store/products/products.selector";
-import {Link, useParams } from 'react-router-dom';
+import {getSelectedProduct, isLoading,} from "../store/products/products.selector";
+import {useParams} from 'react-router-dom';
 import {isEmpty, toNumber} from "lodash-es";
-import { addProduct, editProduct } from '../store/products/products.slice';
+import {addProduct, setIsLoading as setIsProductsLoading, setProducts} from '../store/products/products.slice';
 import ProductService from '../service/products.service';
-import { RouteParamsModel } from '../model/routeParams.model';
-import {setSelectedAnnouncement} from "../store/page/page.slice";
-import {Product} from "../model/product.model"
-import { Alert } from '@material-ui/lab';
-import {CssBaseline, Snackbar } from '@material-ui/core';
-import {ProductApiModel, ProductCategory } from '../api/gorest.api';
-import DrawerContainer from '../list/container/drawer/drawer.container';
+import {RouteParamsModel} from '../model/routeParams.model';
+import {Alert, Skeleton} from '@material-ui/lab';
+import {CssBaseline, Snackbar} from '@material-ui/core';
+import {ProductApiModel, ProductCategory} from '../api/gorest.api';
+import {setSelectedProductId} from "../store/page/page.slice";
 
 const AnnouncementEdit = (props: PropsFromRedux) => {
-    const {announcement, selectedAnnouncementId} = props
+    const {product, isLoading} = props
     let dispatch = useDispatch();
     const {productId} = useParams<RouteParamsModel>();
+    let productIdRouteParam = toNumber(productId);
+
     const [open, setOpen] = React.useState(false);
     const [message, setMessage] = React.useState("");
 
-    const handleSubmit = (name:string, description:string, image:string, price:number, categories: ProductCategory[]) =>{
-        if(announcement){
-            let myAnnouncement: ProductApiModel ={
-                id: announcement.id,
-                name: name,
-                description: description,
-                image: image,
-                price: String(price),
-                categories: categories
-            };
-            ProductService.updateProduct(announcement.id, myAnnouncement)
-                .then(r => {
-                    if(r.id !== undefined){
-                        dispatch(addProduct(r))
-                        setMessage("Successfully edited!");
-                        setOpen(true);
-                    }
+    const handleSubmit = (name: string, description: string, image: string, price: number, categories: ProductCategory[]) => {
+        let myAnnouncement: ProductApiModel = {
+            id: productIdRouteParam,
+            name: name,
+            description: description,
+            image: image,
+            price: String(price),
+            categories: categories
+        };
+        ProductService.updateProduct(productIdRouteParam, myAnnouncement)
+            .then(r => {
+                if (r.id !== undefined) {
+                    dispatch(addProduct(r))
+                    setMessage("Successfully edited!");
+                    setOpen(true);
+                } else {
+                    console.error(r)
+                }
+            })
+    }
+
+    useEffect(() => {
+        dispatch(setSelectedProductId(productIdRouteParam))
+        if (isEmpty(product)) {
+            dispatch(setIsProductsLoading(true))
+            ProductService.loadProducts()
+                .then(products => {
+                    dispatch(setProducts(products))
+                    dispatch(setIsProductsLoading(false))
                 })
         }
-    }
-    useEffect(() => {
-        let productIdNum = toNumber(productId);
-        dispatch(setSelectedAnnouncement(productIdNum))
     }, [])
 
-    useEffect(() => {
-        if (isEmpty(announcement) && selectedAnnouncementId) {
-            ProductService.loadProduct(selectedAnnouncementId)
-                .then(r => dispatch(addProduct(r)))
-        }
-    }, [selectedAnnouncementId])
-    return (
-        <DrawerContainer>
-            <CssBaseline/>
-            <FormComponent buttonLabel="Edit" announcement={props.announcement} handleSubmit={handleSubmit}/>
-            <Snackbar open={open} autoHideDuration={6000}>
-                <Alert  severity="success">
-                    {message}
-                </Alert>
-            </Snackbar>
-        </DrawerContainer>
+    if (isLoading || !product) {
+        return <Skeleton variant="rect" width={210} height={118}/>
+    } else {
+        return (
+            <>
+                <CssBaseline/>
+                <FormComponent buttonLabel="Edit" initialData={product} handleSubmit={handleSubmit}/>
+                <Snackbar open={open} autoHideDuration={6000}>
+                    <Alert severity="success">
+                        {message}
+                    </Alert>
+                </Snackbar>
+            </>
 
-    )
+        )
+    }
+
 }
 const mapStateToProps = (state: RootState) => ({
-    announcement: getSelectedProduct(state),
-    selectedAnnouncementId: getSelectedAnnouncementId(state),
+    product: getSelectedProduct(state),
+    isLoading: isLoading(state),
 })
 const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>

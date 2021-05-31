@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Product } from "../model/product.model";
 
 export interface ProductCategory {
     id: number,
@@ -65,7 +64,7 @@ const fetchProduct = (id: number) => gorestInstance.get<ResponseModel<ProductApi
 
 const addProduct = (product: CreateProductApiModel) => gorestInstance.post<ResponseModel<ProductApiModel>>(`/products`, product)
 
-const updateProduct = (id: number, product: ProductApiModel) => gorestInstance.put(`/products /${id}`, product)
+const updateProduct = (id: number, product: ProductApiModel) => gorestInstance.put(`/products/${id}`, product)
 
 const deleteProduct = (id: number) => gorestInstance.delete(`/products/${id}`)
 
