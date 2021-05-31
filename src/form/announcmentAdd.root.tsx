@@ -17,10 +17,8 @@ import { CreateProductApiModel } from '../api/gorest.api';
 import {ProductCategory} from "../api/gorest.api"
 import DrawerContainer from '../list/container/drawer/drawer.container';
 
-const AnnouncmentAdd = (props: PropsFromRedux) => {
-    const {announcement, selectedAnnouncementId} = props
+const AnnouncmentAdd = () => {
     let dispatch = useDispatch();
-    const {productId} = useParams<RouteParamsModel>()
     const [open, setOpen] = React.useState(false);
     const [message, setMessage] = React.useState("");
 
@@ -43,21 +41,10 @@ const AnnouncmentAdd = (props: PropsFromRedux) => {
             })
     }
 
-    useEffect(() => {
-        let productIdNum = toNumber(productId);
-        dispatch(setSelectedAnnouncement(productIdNum))
-    }, [])
-
-    useEffect(() => {
-        if (isEmpty(announcement) && selectedAnnouncementId) {
-            ProductService.loadProduct(selectedAnnouncementId)
-                .then(r => dispatch(addProduct(r)))
-        }
-    }, [selectedAnnouncementId])
     return (
         <DrawerContainer>
             <CssBaseline/>
-            <FormComponent buttonLabel="Add" announcement={props.announcement} handleSubmit={handleSubmit}/>
+            <FormComponent buttonLabel="Add" handleSubmit={handleSubmit}/>
             <Snackbar open={open} autoHideDuration={6000}>
                 <Alert  severity="success">
                     {message}
@@ -66,10 +53,4 @@ const AnnouncmentAdd = (props: PropsFromRedux) => {
         </DrawerContainer>
     )
 }
-const mapStateToProps = (state: RootState) => ({
-    announcement: getSelectedProduct(state),
-    selectedAnnouncementId: getSelectedAnnouncementId(state),
-})
-const connector = connect(mapStateToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>
-export default connector(AnnouncmentAdd);
+export default AnnouncmentAdd
