@@ -21,8 +21,9 @@ import CategoriesService from '../../service/categories.service';
 const AnnouncementDetails = (props: PropsFromRedux) => {
     const {announcement, selectedAnnouncementId, categories} = props;
     const [open, setOpen] = React.useState(false);
+    let initCategories: Category[] = []
+    const [productCategories, setProductCategories] = React.useState(initCategories);
     let dispatch = useDispatch();
-    let productCategories: Category[] = [];
     const {productId} = useParams<RouteParamsModel>()
 
     useEffect(() => {
@@ -32,15 +33,14 @@ const AnnouncementDetails = (props: PropsFromRedux) => {
 
     const loadProductCategories = () =>{
         if(categories && announcement){
-            productCategories = []
+            let selectedCategories: Category[] = [];
             for (let category of announcement.categories) {
                 let cat =categories.find(x => x.id == category);
                 if(cat != undefined){
-                    productCategories.push(cat);
-                    console.log(cat)
+                    selectedCategories.push(cat)
                 }
             }
-            console.log(productCategories)
+            setProductCategories(selectedCategories);
         }
     }
 
