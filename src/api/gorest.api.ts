@@ -61,11 +61,13 @@ const gorestInstance = axios.create({
 
 const fetchProducts = () => gorestInstance.get<ResponsePaginationModel<ProductApiModel>>('/products')
 
-const fetchProduct = (id: number) => gorestInstance.get<ResponseModel<ProductApiModel>>(`/products /${id}`)
+const fetchProduct = (id: number) => gorestInstance.get<ResponseModel<ProductApiModel>>(`/products/${id}`)
 
 const addProduct = (product: CreateProductApiModel) => gorestInstance.post<ResponseModel<ProductApiModel>>(`/products`, product)
 
 const updateProduct = (id: number, product: ProductApiModel) => gorestInstance.put(`/products /${id}`, product)
+
+const deleteProduct = (id: number) => gorestInstance.delete(`/products/${id}`)
 
 const fetchCategories = () => gorestInstance.get<ResponsePaginationModel<CategoryApiModel>>('/categories')
 
@@ -74,6 +76,7 @@ const GorestRepository = {
     fetchProduct,
     addProduct,
     updateProduct,
+    deleteProduct,
     fetchCategories
 };
 export default GorestRepository
