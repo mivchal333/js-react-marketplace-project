@@ -6,7 +6,6 @@ import ProductService from '../service/products.service';
 import {CssBaseline, Snackbar} from '@material-ui/core';
 import {Alert} from '@material-ui/lab';
 import {CreateProductApiModel, ProductCategory} from '../api/gorest.api';
-import DrawerContainer from '../list/container/drawer/drawer.container';
 
 const AnnouncmentAdd = () => {
     let dispatch = useDispatch();
@@ -33,7 +32,7 @@ const AnnouncmentAdd = () => {
     }
 
     return (
-        <DrawerContainer>
+        <>
             <CssBaseline/>
             <FormComponent buttonLabel="Add" handleSubmit={handleSubmit}/>
             <Snackbar open={open} autoHideDuration={6000}>
@@ -41,7 +40,7 @@ const AnnouncmentAdd = () => {
                     {message}
                 </Alert>
             </Snackbar>
-        </DrawerContainer>
+        </>
     )
 }
 export default AnnouncmentAdd

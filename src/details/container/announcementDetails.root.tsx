@@ -19,7 +19,6 @@ import {
     DialogTitle,
     Grid
 } from '@material-ui/core';
-import DrawerContainer from '../../list/container/drawer/drawer.container';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {getCategories} from '../../store/categories/categories.selector';
@@ -95,7 +94,7 @@ const AnnouncementDetails = (props: PropsFromRedux) => {
         }
     }
     return (
-        <DrawerContainer>
+        <>
             <CssBaseline/>
             <div style={{ padding: 20 }}>
                 <Grid container spacing={1}>
@@ -146,7 +145,7 @@ const AnnouncementDetails = (props: PropsFromRedux) => {
                     </Button>
                 </DialogActions>
             </Dialog>
-        </DrawerContainer>
+        </>
     )
 }
 const mapStateToProps = (state: RootState) => ({

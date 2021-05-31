@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import ProductsTableContainer from "./container/productsTable.container";
 import {CssBaseline} from "@material-ui/core";
-import DrawerContainer from "./container/drawer/drawer.container";
 import {setIsLoading as setIsProductsLoading, setProducts} from "../store/products/products.slice";
 import ProductService from "../service/products.service";
 import {connect, ConnectedProps, useDispatch} from "react-redux";
@@ -25,8 +24,6 @@ const AnnouncementList = (props: PropsFromRedux) => {
     }
     const loadCategories = () => {
         dispatch(setIsCategoriesLoading(true))
-
-
         CategoriesService.loadCategories()
             .then(categories => {
                 dispatch(setCategories(categories));
@@ -44,10 +41,10 @@ const AnnouncementList = (props: PropsFromRedux) => {
 
     return (
         <div>
-            <DrawerContainer>
+            <>
                 <CssBaseline/>
                 <ProductsTableContainer/>
-            </DrawerContainer>
+            </>
         </div>
     );
 };

@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import DrawerActionsContainer from "./drawerActions.container";
+import {debounce} from "lodash-es";
 
 const drawerWidth = 240;
 
@@ -126,6 +127,8 @@ const DrawerContainer = (props: PropsType) => {
                     paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
                 }}
                 open={open}
+                onMouseEnter={debounce(() => setOpen(true), 200)}
+                onMouseLeave={debounce(() => setOpen(false), 200)}
             >
                 <div className={classes.toolbarIcon}>
                     <IconButton onClick={handleDrawerClose}>

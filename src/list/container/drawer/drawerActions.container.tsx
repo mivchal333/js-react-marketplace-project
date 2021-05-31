@@ -6,19 +6,15 @@ import {Link} from 'react-router-dom'
 
 const DrawerActionsContainer = () => {
     return (<div>
-            <ListItem button>
+            <ListItem button component={Link} to='/'>
                 <ListItemIcon>
-                    <Link to='/'>
-                        <SearchIcon/>
-                    </Link>
+                    <SearchIcon/>
                 </ListItemIcon>
                 <ListItemText primary="Search"/>
             </ListItem>
-            <ListItem button>
+            <ListItem button component={Link} to='/add'>
                 <ListItemIcon>
-                    <Link to='/add'>
-                        <AddIcon/>
-                    </Link>
+                    <AddIcon/>
                 </ListItemIcon>
                 <ListItemText primary="Add Product"/>
             </ListItem>

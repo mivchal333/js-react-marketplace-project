@@ -15,7 +15,7 @@ const TableHeader = ({headerGroups}: PropTypes) => (
         {headerGroups.map(headerGroup => (
             <TableRow {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map(column => (
-                    <TableCell>
+                    <TableCell key={column.id}>
                         <div {...column.getHeaderProps(column.getSortByToggleProps())}>
                             {column.render('Header')}
                             <TableSortLabel
