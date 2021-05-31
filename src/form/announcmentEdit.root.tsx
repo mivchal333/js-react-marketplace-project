@@ -3,7 +3,7 @@ import {connect, ConnectedProps, useDispatch} from "react-redux";
 import {RootState} from '../store/store';
 import FormComponent from './container/form.cointainer'
 import {getSelectedProduct, isLoading,} from "../store/products/products.selector";
-import {useParams} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 import {isEmpty, toNumber} from "lodash-es";
 import {addProduct, setIsLoading as setIsProductsLoading, setProducts} from '../store/products/products.slice';
 import ProductService from '../service/products.service';
@@ -18,6 +18,7 @@ const AnnouncementEdit = (props: PropsFromRedux) => {
     let dispatch = useDispatch();
     const {productId} = useParams<RouteParamsModel>();
     let productIdRouteParam = toNumber(productId);
+    let history = useHistory();
 
     const [open, setOpen] = React.useState(false);
     const [message, setMessage] = React.useState("");
@@ -61,7 +62,11 @@ const AnnouncementEdit = (props: PropsFromRedux) => {
         return (
             <>
                 <CssBaseline/>
-                <FormComponent buttonLabel="Edit" initialData={product} handleSubmit={handleSubmit}/>
+                <FormComponent
+                    buttonLabel="Edit"
+                    initialData={product} handleSubmit={handleSubmit}
+                    onCancel={() => history.push(`/product/${product.id}`)}
+                />
                 <Snackbar open={open} autoHideDuration={6000}>
                     <Alert severity="success">
                         {message}

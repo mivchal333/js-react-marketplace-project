@@ -14,7 +14,8 @@ import {ProductCategory} from "../../api/gorest.api"
 interface IProps extends PropsFromRedux {
     handleSubmit: (name: string, description: string, image: string, price: number, categories: ProductCategory[]) => void,
     buttonLabel: string,
-    initialData?: Product
+    initialData?: Product,
+    onCancel: () => void,
 }
 
 interface IState {
@@ -69,17 +70,6 @@ class FormComponent extends Component<IProps, IState> {
     }
 
     componentDidMount() {
-        if (isEmpty(this.props.categories)) {
-            store.dispatch(setIsCategoriesLoading(true));
-            CategoriesService.loadCategories()
-                .then(categories => {
-                    store.dispatch(setCategories(categories))
-                    const selectedCategories = map(this.props.initialData?.categories,
-                        categoryId => find(categories, {id: categoryId}))
-                    // @ts-ignore
-                    this.setState({categories: selectedCategories})
-                })
-        }
         const {initialData} = this.props
         if (initialData) {
             this.setState({
@@ -89,6 +79,21 @@ class FormComponent extends Component<IProps, IState> {
                 price: initialData.price,
             })
         }
+        this.initCategories()
+    }
+
+    async initCategories() {
+        if (isEmpty(this.props.categories)) {
+            store.dispatch(setIsCategoriesLoading(true));
+            const categories = await CategoriesService.loadCategories()
+            await store.dispatch(setCategories(categories))
+            store.dispatch(setIsCategoriesLoading(false));
+        }
+        const selectedCategories = map(this.props.initialData?.categories,
+            categoryId => find(this.props.categories, {id: categoryId}))
+            .filter(category => category)
+        // @ts-ignore
+        this.setState({categories: selectedCategories})
     }
 
     validate(): boolean {
@@ -224,6 +229,7 @@ class FormComponent extends Component<IProps, IState> {
                         />
                         <Button variant="contained" color="primary"
                                 onClick={this.handleFormSubmit.bind(this)}>{this.props.buttonLabel}</Button>
+                        <Button variant="contained" onClick={this.props.onCancel}>Cancel</Button>
                     </form>
                 </Grid>
             </Grid>
