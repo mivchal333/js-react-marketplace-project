@@ -12,8 +12,9 @@ import { RouteParamsModel } from '../model/routeParams.model';
 import {setSelectedAnnouncement} from "../store/page/page.slice";
 import {Product} from "../model/product.model"
 import { Alert } from '@material-ui/lab';
-import { Snackbar } from '@material-ui/core';
+import {CssBaseline, Snackbar } from '@material-ui/core';
 import {ProductApiModel, ProductCategory } from '../api/gorest.api';
+import DrawerContainer from '../list/container/drawer/drawer.container';
 
 const AnnouncementEdit = (props: PropsFromRedux) => {
     const {announcement, selectedAnnouncementId} = props
@@ -34,9 +35,11 @@ const AnnouncementEdit = (props: PropsFromRedux) => {
             };
             ProductService.updateProduct(announcement.id, myAnnouncement)
                 .then(r => {
-                    dispatch(addProduct(r))
-                    setMessage("Successfully edited!");
-                    setOpen(true);
+                    if(r.id !== undefined){
+                        dispatch(addProduct(r))
+                        setMessage("Successfully edited!");
+                        setOpen(true);
+                    }
                 })
         }
     }
@@ -52,15 +55,15 @@ const AnnouncementEdit = (props: PropsFromRedux) => {
         }
     }, [selectedAnnouncementId])
     return (
-        <>
-            <Link to="/">Home</Link>
+        <DrawerContainer>
+            <CssBaseline/>
             <FormComponent buttonLabel="Edit" announcement={props.announcement} handleSubmit={handleSubmit}/>
             <Snackbar open={open} autoHideDuration={6000}>
                 <Alert  severity="success">
                     {message}
                 </Alert>
             </Snackbar>
-        </>
+        </DrawerContainer>
 
     )
 }

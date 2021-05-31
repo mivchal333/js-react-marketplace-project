@@ -33,10 +33,16 @@ const updateProduct = async (id: number, product: ProductApiModel): Promise<Prod
     return  mapToProductAppModel(data.data.data);
 }
 
+const deleteProduct = async (id: number): Promise<AxiosResponse> => {
+    const request = await gorestRepository.deleteProduct(id)
+    return request;
+}
+
 const ProductService = {
     loadProducts,
     loadProduct,
     addProduct,
+    deleteProduct,
     updateProduct
 };
 export default ProductService

@@ -11,10 +11,11 @@ import ProductService from '../service/products.service';
 import { RouteParamsModel } from '../model/routeParams.model';
 import {setSelectedAnnouncement} from "../store/page/page.slice";
 import { Product } from '../model/product.model';
-import { Snackbar } from '@material-ui/core';
+import {CssBaseline, Snackbar } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { CreateProductApiModel } from '../api/gorest.api';
 import {ProductCategory} from "../api/gorest.api"
+import DrawerContainer from '../list/container/drawer/drawer.container';
 
 const AnnouncmentAdd = (props: PropsFromRedux) => {
     const {announcement, selectedAnnouncementId} = props
@@ -33,7 +34,13 @@ const AnnouncmentAdd = (props: PropsFromRedux) => {
             status: true
         };
         ProductService.addProduct(myAnnouncement)
-            .then(r => dispatch(addProduct(r)))
+            .then(r => {
+                if(r.id !== undefined){
+                    dispatch(addProduct(r));
+                    setMessage("Successfully added!");
+                    setOpen(true);
+                }
+            })
     }
 
     useEffect(() => {
@@ -48,15 +55,15 @@ const AnnouncmentAdd = (props: PropsFromRedux) => {
         }
     }, [selectedAnnouncementId])
     return (
-        <>
-            <Link to="/">Home</Link>
+        <DrawerContainer>
+            <CssBaseline/>
             <FormComponent buttonLabel="Add" announcement={props.announcement} handleSubmit={handleSubmit}/>
             <Snackbar open={open} autoHideDuration={6000}>
                 <Alert  severity="success">
                     {message}
                 </Alert>
             </Snackbar>
-        </>
+        </DrawerContainer>
     )
 }
 const mapStateToProps = (state: RootState) => ({
