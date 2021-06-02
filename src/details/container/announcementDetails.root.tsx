@@ -5,7 +5,7 @@ import {getSelectedProduct} from "../../store/products/products.selector";
 import {isEmpty, toNumber} from "lodash-es";
 import ProductService from '../../service/products.service'
 import {addProduct, deleteProduct} from "../../store/products/products.slice";
-import {Link, useParams} from 'react-router-dom';
+import {Link, useHistory, useParams} from 'react-router-dom';
 import {RouteParamsModel} from "../../model/routeParams.model";
 import {setSelectedProductId} from "../../store/page/page.slice";
 import {getSelectedAnnouncementId} from "../../store/page/page.selector";
@@ -33,6 +33,7 @@ const AnnouncementDetails = (props: PropsFromRedux) => {
     const [productCategories, setProductCategories] = React.useState(initCategories);
     let dispatch = useDispatch();
     const {productId} = useParams<RouteParamsModel>()
+    let history = useHistory();
 
     useEffect(() => {
         let productIdNum = toNumber(productId);
@@ -87,9 +88,8 @@ const AnnouncementDetails = (props: PropsFromRedux) => {
             ProductService.deleteProduct(selectedAnnouncementId)
                 .then(r => {
                     if(r.status == 200){
-                        //TODO redirect
-                        console.log("ok");
                         dispatch(deleteProduct(selectedAnnouncementId));
+                        history.push(`/`)
                     }})
         }
     }
