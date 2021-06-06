@@ -11,6 +11,7 @@ import {setCategories, setIsLoading as setIsCategoriesLoading} from "../../store
 import {find, isEmpty, map} from "lodash-es";
 import {ProductCategory} from "../../api/gorest.api"
 import Container from '@material-ui/core/Container';
+import PhotoField from "./photoField.container";
 
 interface IProps extends PropsFromRedux {
     handleSubmit: (name: string, description: string, image: string, price: number, categories: ProductCategory[]) => void,
@@ -60,6 +61,7 @@ class FormComponent extends Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = initialState;
+        this.onImageChange = this.onImageChange.bind(this);
     }
 
     handleFormSubmit(e: React.MouseEvent<HTMLButtonElement>) {
@@ -165,6 +167,12 @@ class FormComponent extends Component<IProps, IState> {
         })
     }
 
+    onImageChange(imageSrc: string) {
+        this.setState({
+            image: imageSrc
+        })
+    }
+
     render() {
         return (
             <Container component="main">
@@ -177,6 +185,14 @@ class FormComponent extends Component<IProps, IState> {
                     <Grid item xs={6}>
                         <Card style={{padding: '2em'}}>
                             <form>
+                                <FormControl fullWidth required={true} error={this.state.image_error} margin={'normal'}>
+                                    <PhotoField
+                                        onChange={this.onImageChange}
+                                        value={this.state.image}
+                                        productName={this.state.name}
+                                    />
+                                </FormControl>
+
                                 <FormControl fullWidth required={true} error={this.state.name_error} margin={'normal'}>
                                     <InputLabel htmlFor="name-input">Name</InputLabel>
                                     <Input id="name-input" aria-describedby="name-helper-text" name={"name"}
@@ -194,16 +210,6 @@ class FormComponent extends Component<IProps, IState> {
                                     <FormHelperText
                                         id="description-helper-text">{this.state.description_error ? this.state.description_error_text : 'Item description'}</FormHelperText>
                                 </FormControl>
-
-                                <FormControl fullWidth required={true} error={this.state.image_error} margin={'normal'}>
-                                    <InputLabel htmlFor="image-input">Image</InputLabel>
-                                    <Input id="image-input" aria-describedby="image-helper-text" name={"image"}
-                                           type={"url"}
-                                           value={this.state.image} onChange={this.handleChange.bind(this)}/>
-                                    <FormHelperText
-                                        id="image-helper-text">{this.state.image_error ? this.state.image_error_text : 'Item image url'}</FormHelperText>
-                                </FormControl>
-
                                 <FormControl fullWidth required={true} error={this.state.price_error} margin={'normal'}>
                                     <InputLabel htmlFor="price-input">Price</InputLabel>
                                     <Input id="price-input" aria-describedby="price-helper-text" name={"price"}
