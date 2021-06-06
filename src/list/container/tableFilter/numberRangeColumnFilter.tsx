@@ -1,5 +1,6 @@
 import React from "react";
 import {TextField} from "@material-ui/core";
+import {toNumber} from "lodash-es";
 
 function NumberRangeColumnFilter({
                                      column: {filterValue = [], setFilter},
@@ -15,7 +16,8 @@ function NumberRangeColumnFilter({
                 type="number"
                 onChange={e => {
                     const val = e.target.value
-                    setFilter((old = []) => [val ? parseInt(val, 10) : undefined, old[1]])
+                    const numberValue = toNumber(val);
+                    setFilter((old = []) => [numberValue > 0 ? numberValue : undefined, old[1]])
                 }}
                 placeholder={`Min`}
                 style={{
@@ -29,7 +31,8 @@ function NumberRangeColumnFilter({
                 type="number"
                 onChange={e => {
                     const val = e.target.value
-                    setFilter((old = []) => [old[0], val ? parseInt(val, 10) : undefined])
+                    const numberValue = toNumber(val);
+                    setFilter((old = []) => [old[0], numberValue > 0 ? numberValue : undefined])
                 }}
                 placeholder={`Max`}
                 style={{

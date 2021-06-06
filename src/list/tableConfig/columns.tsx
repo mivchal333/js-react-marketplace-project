@@ -22,7 +22,8 @@ export const columns: Column<Product>[] = [
         Header: 'Name',
         accessor: 'name',
         Cell: ({row}) => (<ProductName product={row.original}/>),
-        Filter: DefaultFilter
+        Filter: DefaultFilter,
+        sortType: "string"
     },
     {
         Header: 'Price',
