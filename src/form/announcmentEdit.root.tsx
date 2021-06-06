@@ -5,7 +5,7 @@ import FormComponent from './container/form.cointainer'
 import {getSelectedProduct, isLoading,} from "../store/products/products.selector";
 import {useHistory, useParams} from 'react-router-dom';
 import {isEmpty, toNumber} from "lodash-es";
-import {addProduct, setIsLoading as setIsProductsLoading, setProducts} from '../store/products/products.slice';
+import {editProduct, setIsLoading as setIsProductsLoading, setProducts} from '../store/products/products.slice';
 import ProductService from '../service/products.service';
 import {RouteParamsModel} from '../model/routeParams.model';
 import {Alert, Skeleton} from '@material-ui/lab';
@@ -35,7 +35,7 @@ const AnnouncementEdit = (props: PropsFromRedux) => {
         ProductService.updateProduct(productIdRouteParam, myAnnouncement)
             .then(r => {
                 if (r.id !== undefined) {
-                    dispatch(addProduct(r))
+                    dispatch(editProduct(r))
                     setMessage("Successfully edited!");
                     setOpen(true);
                     history.push(`/product/${productId}`)

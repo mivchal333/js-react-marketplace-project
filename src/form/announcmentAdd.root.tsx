@@ -28,6 +28,7 @@ const AnnouncmentAdd = () => {
                     dispatch(addProduct(r));
                     setMessage("Successfully added!");
                     setOpen(true);
+                    history.push(`/product/${r.id}`)
                 }
             })
     }

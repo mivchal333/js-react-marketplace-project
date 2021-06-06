@@ -6,8 +6,9 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {CardMedia, CircularProgress, createStyles, GridList, GridListTile, Theme} from "@material-ui/core";
+import {CardMedia, createStyles, GridList, GridListTile, Theme} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
+import ImageIcon from '@material-ui/icons/Image';
 
 interface Props {
     onChange: (event: any) => void,
@@ -49,7 +50,7 @@ const PhotoField = (props: Props) => {
             .then(photos => {
                 setPhotoOptions(photos)
             })
-    }, [props.productName])
+    }, [])
 
     const onInputChange = (query: string) => {
         PhotoService.loadPhotos(query)
@@ -63,18 +64,26 @@ const PhotoField = (props: Props) => {
         props.onChange(imageSrc)
         setIsDialogOpen(false)
     }
-    if (!props.value) {
-        return (<CircularProgress/>)
-    }
     return (
         <div>
-            <CardMedia
-                className={classes.media}
-                image={props.value}
-                title="Product Image"
-                onClick={() => setIsDialogOpen(true)}
-            />
-
+            {props.value ?
+                (<CardMedia
+                    className={classes.media}
+                    image={props.value}
+                    title="Product Image"
+                    onClick={() => setIsDialogOpen(true)}
+                />)
+                :
+                (<Button
+                    startIcon={<ImageIcon/>}
+                    variant="outlined"
+                    onClick={() => {
+                        setIsDialogOpen(true)
+                    }}
+                >
+                    Select image
+                </Button>)
+            }
             <Dialog open={isDialogOpen} onClose={onDialogClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Search image</DialogTitle>
                 <DialogContent>
@@ -110,7 +119,6 @@ const PhotoField = (props: Props) => {
                     </Button>
                 </DialogActions>
             </Dialog>
-
         </div>
 
     )

@@ -13,12 +13,13 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import DrawerActionsContainer from "./drawerActions.container";
 import {debounce} from "lodash-es";
 
-const drawerWidth = 240;
+const drawerWidth = 180;
 
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
+        height: '100vh'
     },
     toolbar: {
         paddingRight: 24, // keep right padding when drawer closed
@@ -127,7 +128,7 @@ const DrawerContainer = (props: PropsType) => {
                     paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
                 }}
                 open={open}
-                onMouseEnter={debounce(() => setOpen(true), 200)}
+                onMouseEnter={debounce(() => setOpen(true), 1000)}
                 onMouseLeave={debounce(() => setOpen(false), 200)}
             >
                 <div className={classes.toolbarIcon}>
