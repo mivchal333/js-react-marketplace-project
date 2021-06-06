@@ -28,6 +28,7 @@ import {setCategories, setIsLoading as setIsCategoriesLoading} from "../store/ca
 import CategoriesService from '../service/categories.service';
 import PriceLabel from "../list/container/tableCell/priceLabel";
 import ProductNotFound from "./component/productNotFound.component";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const AnnouncementDetails = (props: PropsFromRedux) => {
     const {product, selectedAnnouncementId, categories} = props;
@@ -108,7 +109,8 @@ const AnnouncementDetails = (props: PropsFromRedux) => {
             <div style={{padding: 20}}>
                 <Grid container spacing={1}>
                     <Grid item xs={12}>
-                        <h1>{product?.name}</h1>
+                        <h1><Button startIcon={<ArrowBackIcon/>} onClick={() => history.push('/')}/> {product?.name}
+                        </h1>
                     </Grid>
                     <Grid item xs={6}>
                         <img src={product?.image} alt={product?.name}/>
