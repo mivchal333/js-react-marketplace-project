@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, FormControl, FormHelperText, Grid, Input, InputLabel, TextField} from '@material-ui/core';
+import {Button, Card, FormControl, FormHelperText, Grid, Input, InputLabel, TextField} from '@material-ui/core';
 import {Product} from "../../model/product.model"
 import {Category} from "../../model/category.model"
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -10,6 +10,7 @@ import CategoriesService from "../../service/categories.service";
 import {setCategories, setIsLoading as setIsCategoriesLoading} from "../../store/categories/categories.slice";
 import {find, isEmpty, map} from "lodash-es";
 import {ProductCategory} from "../../api/gorest.api"
+import Container from '@material-ui/core/Container';
 
 interface IProps extends PropsFromRedux {
     handleSubmit: (name: string, description: string, image: string, price: number, categories: ProductCategory[]) => void,
@@ -166,73 +167,80 @@ class FormComponent extends Component<IProps, IState> {
 
     render() {
         return (
-            <Grid
-                container
-                spacing={0}
-                direction="column"
-                alignItems="center"
-            >
-                <Grid item xs={6}>
-                    <form>
-                        <FormControl fullWidth required={true} error={this.state.name_error} margin={'normal'}>
-                            <InputLabel htmlFor="name-input">Name</InputLabel>
-                            <Input id="name-input" aria-describedby="name-helper-text" name={"name"}
-                                   value={this.state.name} onChange={this.handleChange.bind(this)}/>
-                            <FormHelperText
-                                id="name-helper-text">{this.state.name_error ? this.state.name_error_text : 'Item name'}</FormHelperText>
-                        </FormControl>
+            <Container component="main">
+                <Grid
+                    container
+                    spacing={2}
+                    direction="column"
+                    alignItems="center"
+                >
+                    <Grid item xs={6}>
+                        <Card style={{padding: '2em'}}>
+                            <form>
+                                <FormControl fullWidth required={true} error={this.state.name_error} margin={'normal'}>
+                                    <InputLabel htmlFor="name-input">Name</InputLabel>
+                                    <Input id="name-input" aria-describedby="name-helper-text" name={"name"}
+                                           value={this.state.name} onChange={this.handleChange.bind(this)}/>
+                                    <FormHelperText
+                                        id="name-helper-text">{this.state.name_error ? this.state.name_error_text : 'Item name'}</FormHelperText>
+                                </FormControl>
 
-                        <FormControl fullWidth required={true} error={this.state.description_error} margin={'normal'}>
-                            <InputLabel htmlFor="description-input">Description</InputLabel>
-                            <Input id="description-input" multiline={true} rowsMin={3}
-                                   aria-describedby="description-helper-text" value={this.state.description}
-                                   name={"description"} onChange={this.handleChange.bind(this)}/>
-                            <FormHelperText
-                                id="description-helper-text">{this.state.description_error ? this.state.description_error_text : 'Item description'}</FormHelperText>
-                        </FormControl>
+                                <FormControl fullWidth required={true} error={this.state.description_error}
+                                             margin={'normal'}>
+                                    <InputLabel htmlFor="description-input">Description</InputLabel>
+                                    <Input id="description-input" multiline={true} rowsMin={3}
+                                           aria-describedby="description-helper-text" value={this.state.description}
+                                           name={"description"} onChange={this.handleChange.bind(this)}/>
+                                    <FormHelperText
+                                        id="description-helper-text">{this.state.description_error ? this.state.description_error_text : 'Item description'}</FormHelperText>
+                                </FormControl>
 
-                        <FormControl fullWidth required={true} error={this.state.image_error} margin={'normal'}>
-                            <InputLabel htmlFor="image-input">Image</InputLabel>
-                            <Input id="image-input" aria-describedby="image-helper-text" name={"image"} type={"url"}
-                                   value={this.state.image} onChange={this.handleChange.bind(this)}/>
-                            <FormHelperText
-                                id="image-helper-text">{this.state.image_error ? this.state.image_error_text : 'Item image url'}</FormHelperText>
-                        </FormControl>
+                                <FormControl fullWidth required={true} error={this.state.image_error} margin={'normal'}>
+                                    <InputLabel htmlFor="image-input">Image</InputLabel>
+                                    <Input id="image-input" aria-describedby="image-helper-text" name={"image"}
+                                           type={"url"}
+                                           value={this.state.image} onChange={this.handleChange.bind(this)}/>
+                                    <FormHelperText
+                                        id="image-helper-text">{this.state.image_error ? this.state.image_error_text : 'Item image url'}</FormHelperText>
+                                </FormControl>
 
-                        <FormControl fullWidth required={true} error={this.state.price_error} margin={'normal'}>
-                            <InputLabel htmlFor="price-input">Price</InputLabel>
-                            <Input id="price-input" aria-describedby="price-helper-text" name={"price"} type={"number"}
-                                   value={this.state.price} onChange={this.handleChange.bind(this)}/>
-                            <FormHelperText
-                                id="price-helper-text">{this.state.price_error ? this.state.price_error_text : 'Item price'}</FormHelperText>
-                        </FormControl>
+                                <FormControl fullWidth required={true} error={this.state.price_error} margin={'normal'}>
+                                    <InputLabel htmlFor="price-input">Price</InputLabel>
+                                    <Input id="price-input" aria-describedby="price-helper-text" name={"price"}
+                                           type={"number"}
+                                           value={this.state.price} onChange={this.handleChange.bind(this)}/>
+                                    <FormHelperText
+                                        id="price-helper-text">{this.state.price_error ? this.state.price_error_text : 'Item price'}</FormHelperText>
+                                </FormControl>
 
-                        <Autocomplete fullWidth
-                                      multiple
-                                      options={this.props.categories}
-                                      getOptionLabel={(option) => option.name}
-                                      value={this.state.categories}
-                                      filterSelectedOptions
-                                      onChange={(event, newValue) => {
-                                          this.handleAutocomplete(newValue)
-                                      }}
-                                      renderInput={(params) => (
-                                          <TextField
-                                              {...params}
-                                              error={this.state.category_error}
-                                              helperText={this.state.category_error ? this.state.category_error_text : 'Item categories'}
-                                              variant="outlined"
-                                              label="Categories"
-                                              placeholder="Category"
-                                          />
-                                      )}
-                        />
-                        <Button variant="contained" color="primary"
-                                onClick={this.handleFormSubmit.bind(this)}>{this.props.buttonLabel}</Button>
-                        <Button variant="contained" onClick={this.props.onCancel}>Cancel</Button>
-                    </form>
+                                <Autocomplete fullWidth
+                                              multiple
+                                              options={this.props.categories}
+                                              getOptionLabel={(option) => option.name}
+                                              value={this.state.categories}
+                                              filterSelectedOptions
+                                              onChange={(event, newValue) => {
+                                                  this.handleAutocomplete(newValue)
+                                              }}
+                                              renderInput={(params) => (
+                                                  <TextField
+                                                      {...params}
+                                                      error={this.state.category_error}
+                                                      helperText={this.state.category_error ? this.state.category_error_text : 'Item categories'}
+                                                      variant="outlined"
+                                                      label="Categories"
+                                                      placeholder="Category"
+                                                  />
+                                              )}
+                                />
+                                <Button variant="contained" color="primary"
+                                        onClick={this.handleFormSubmit.bind(this)}>{this.props.buttonLabel}</Button>
+                                <Button variant="contained" onClick={this.props.onCancel}>Cancel</Button>
+                            </form>
+                        </Card>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </Container>
         );
     }
 }

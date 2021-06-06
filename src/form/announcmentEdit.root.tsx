@@ -38,6 +38,7 @@ const AnnouncementEdit = (props: PropsFromRedux) => {
                     dispatch(addProduct(r))
                     setMessage("Successfully edited!");
                     setOpen(true);
+                    history.push(`/product/${productId}`)
                 } else {
                     console.error(r)
                 }
