@@ -10,8 +10,8 @@ import ProductService from '../service/products.service';
 import {RouteParamsModel} from '../model/routeParams.model';
 import {Alert, Skeleton} from '@material-ui/lab';
 import {CssBaseline, Snackbar} from '@material-ui/core';
-import {ProductApiModel, ProductCategory} from '../api/gorest.api';
 import {setSelectedProductId} from "../store/page/page.slice";
+import {Product} from "../model/product.model";
 
 const AnnouncementEdit = (props: PropsFromRedux) => {
     const {product, isLoading} = props
@@ -23,13 +23,13 @@ const AnnouncementEdit = (props: PropsFromRedux) => {
     const [open, setOpen] = React.useState(false);
     const [message, setMessage] = React.useState("");
 
-    const handleSubmit = (name: string, description: string, image: string, price: number, categories: ProductCategory[]) => {
-        let myAnnouncement: ProductApiModel = {
+    const handleSubmit = (name: string, description: string, image: string, price: number, categories: number[]) => {
+        let myAnnouncement: Product = {
             id: productIdRouteParam,
             name: name,
             description: description,
             image: image,
-            price: String(price),
+            price: price,
             categories: categories
         };
         ProductService.updateProduct(productIdRouteParam, myAnnouncement)

@@ -1,14 +1,14 @@
 import React, {useEffect} from 'react'
 import {connect, ConnectedProps, useDispatch} from "react-redux";
-import {RootState} from "../../store/store";
-import {getSelectedProduct} from "../../store/products/products.selector";
+import {RootState} from "../store/store";
+import {getSelectedProduct} from "../store/products/products.selector";
 import {isEmpty, toNumber} from "lodash-es";
-import ProductService from '../../service/products.service'
-import {addProduct, deleteProduct} from "../../store/products/products.slice";
+import ProductService from '../service/products.service'
+import {addProduct, deleteProduct} from "../store/products/products.slice";
 import {Link, useHistory, useParams} from 'react-router-dom';
-import {RouteParamsModel} from "../../model/routeParams.model";
-import {setSelectedProductId} from "../../store/page/page.slice";
-import {getSelectedAnnouncementId} from "../../store/page/page.selector";
+import {RouteParamsModel} from "../model/routeParams.model";
+import {setSelectedProductId} from "../store/page/page.slice";
+import {getSelectedAnnouncementId} from "../store/page/page.selector";
 import {
     Button,
     ButtonGroup,
@@ -22,12 +22,12 @@ import {
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import {getCategories} from '../../store/categories/categories.selector';
-import {Category} from '../../model/category.model';
-import {setCategories, setIsLoading as setIsCategoriesLoading} from "../../store/categories/categories.slice";
-import CategoriesService from '../../service/categories.service';
-import PriceLabel from "../../list/container/tableCell/priceLabel";
-import ProductNotFound from "../component/productNotFound.component";
+import {getCategories} from '../store/categories/categories.selector';
+import {Category} from '../model/category.model';
+import {setCategories, setIsLoading as setIsCategoriesLoading} from "../store/categories/categories.slice";
+import CategoriesService from '../service/categories.service';
+import PriceLabel from "../list/container/tableCell/priceLabel";
+import ProductNotFound from "./component/productNotFound.component";
 
 const AnnouncementDetails = (props: PropsFromRedux) => {
     const {product, selectedAnnouncementId, categories} = props;
@@ -78,6 +78,7 @@ const AnnouncementDetails = (props: PropsFromRedux) => {
 
             CategoriesService.loadCategories()
                 .then(categories => {
+                    console.log(categories)
                     dispatch(setCategories(categories))
                     dispatch(setIsCategoriesLoading(false));
                 })

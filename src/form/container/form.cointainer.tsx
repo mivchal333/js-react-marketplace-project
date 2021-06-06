@@ -9,12 +9,11 @@ import {connect, ConnectedProps} from "react-redux";
 import CategoriesService from "../../service/categories.service";
 import {setCategories, setIsLoading as setIsCategoriesLoading} from "../../store/categories/categories.slice";
 import {find, isEmpty, map} from "lodash-es";
-import {ProductCategory} from "../../api/gorest.api"
 import Container from '@material-ui/core/Container';
 import PhotoField from "./photoField.container";
 
 interface IProps extends PropsFromRedux {
-    handleSubmit: (name: string, description: string, image: string, price: number, categories: ProductCategory[]) => void,
+    handleSubmit: (name: string, description: string, image: string, price: number, categories: number[]) => void,
     buttonLabel: string,
     initialData?: Product,
     onCancel: () => void,
@@ -69,7 +68,8 @@ class FormComponent extends Component<IProps, IState> {
         if (!this.validate()) {
             return;
         }
-        this.props.handleSubmit(this.state.name, this.state.description, this.state.image, this.state.price, this.state.categories);
+        const categoriesIds = map(this.state.categories, category => category.id)
+        this.props.handleSubmit(this.state.name, this.state.description, this.state.image, this.state.price, categoriesIds);
     }
 
     componentDidMount() {

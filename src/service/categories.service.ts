@@ -1,13 +1,9 @@
 import GorestRepository from "../api/gorest.api";
-import {map} from "lodash-es";
+import {Category} from "../model/category.model";
 
-const loadCategories = async () => {
-    const {data: {data = []}} = await GorestRepository.fetchCategories();
-    return map(data, categoryApiModel => ({
-        id: categoryApiModel.id,
-        name: categoryApiModel.name,
-        description: categoryApiModel.description
-    }))
+const loadCategories = async (): Promise<Category[]> => {
+    const {data = []} = await GorestRepository.fetchCategories();
+    return data;
 }
 const CategoriesService = {
     loadCategories

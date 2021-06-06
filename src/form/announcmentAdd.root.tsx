@@ -5,8 +5,8 @@ import {addProduct} from '../store/products/products.slice';
 import ProductService from '../service/products.service';
 import {CssBaseline, Snackbar} from '@material-ui/core';
 import {Alert} from '@material-ui/lab';
-import {CreateProductApiModel, ProductCategory} from '../api/gorest.api';
 import {useHistory} from "react-router-dom";
+import {CreateProductPayload} from "../model/product.model";
 
 const AnnouncmentAdd = () => {
     let dispatch = useDispatch();
@@ -14,14 +14,13 @@ const AnnouncmentAdd = () => {
     const [message, setMessage] = React.useState("");
     let history = useHistory();
 
-    const handleSubmit = (name: string, description: string, image: string, price: number, categories: ProductCategory[]) => {
-        let myAnnouncement: CreateProductApiModel = {
+    const handleSubmit = (name: string, description: string, image: string, price: number, categories: number[]) => {
+        let myAnnouncement: CreateProductPayload = {
             name: name,
             description: description,
             image: image,
-            price: String(price),
+            price: price,
             categories: categories,
-            status: true
         };
         ProductService.addProduct(myAnnouncement)
             .then(r => {

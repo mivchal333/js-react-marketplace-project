@@ -1,0 +1,152 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Industrial, Jewelry & Home",
+      "description": "Verus vestigium peior harum adfectus compono textor quae suggero."
+    },
+    {
+      "id": 2,
+      "name": "Music",
+      "description": "Absorbeo denique defungo corrigo cuius adnuo."
+    },
+    {
+      "id": 3,
+      "name": "Games, Computers & Shoes",
+      "description": "Adamo ocer quaerat sopor ratione corrumpo absque pectus."
+    },
+    {
+      "id": 4,
+      "name": "Industrial & Clothing",
+      "description": "Et commodo numquam natus ad abbas turbo."
+    },
+    {
+      "id": 5,
+      "name": "Clothing & Industrial",
+      "description": "Ante synagoga amet peior adiuvo ascit amitto antiquus nulla."
+    },
+    {
+      "id": 6,
+      "name": "Grocery, Jewelry & Sports",
+      "description": "Tenetur desipio cogo accusamus vobis vulgo quaerat provident appello copia."
+    },
+    {
+      "id": 7,
+      "name": "Movies, Kids & Home",
+      "description": "Voluptatum curvo antea tantum confido surculus acceptus commodi defessus terminatio deleo."
+    },
+    {
+      "id": 8,
+      "name": "Movies",
+      "description": "Quisquam careo catena tristis torrens."
+    },
+    {
+      "id": 9,
+      "name": "Automotive, Beauty & Electronics",
+      "description": "Tricesimus voluptate conor acervus sonitus cubo dolores."
+    },
+    {
+      "id": 10,
+      "name": "Music, Clothing & Home",
+      "description": "Decerno cum suscipit conservo quia vestigium et consequatur terebro ducimus venia."
+    },
+    {
+      "id": 11,
+      "name": "Music, Electronics & Health",
+      "description": "Arbustum degenero deprimo amitto caute defungo."
+    },
+    {
+      "id": 12,
+      "name": "Garden & Electronics",
+      "description": "Theca velum denique avaritia custodia cedo conscendo possimus damnatio."
+    },
+    {
+      "id": 13,
+      "name": "Clothing",
+      "description": "Surgo non atqui toties unde carus aufero."
+    },
+    {
+      "id": 14,
+      "name": "Movies & Shoes",
+      "description": "Non brevis cupiditas tondeo provident comes carcer aperio."
+    },
+    {
+      "id": 15,
+      "name": "Automotive & Outdoors",
+      "description": "Sopor coerceo civitas copia deleniti aeternus voluptates vulgo itaque optio casus."
+    },
+    {
+      "id": 16,
+      "name": "Books & Movies",
+      "description": "Bardus carpo deserunt maxime careo caute ex amicitia."
+    },
+    {
+      "id": 17,
+      "name": "Sports & Games",
+      "description": "Valeo amoveo corpus truculenter confido succurro voluptas."
+    },
+    {
+      "id": 18,
+      "name": "Grocery, Jewelry & Automotive",
+      "description": "Spoliatio voluptatem cognomen turba omnis ex vomito solus aspernatur optio caveo."
+    },
+    {
+      "id": 19,
+      "name": "Baby",
+      "description": "Verto turbo artificiose cado deputo."
+    }
+  ],
+  "products": [
+    {
+      "id": 3,
+      "name": "CAR",
+      "description": "Inflammatio carmen aestas strues voluptas absens cariosus eaque cunctatio annus tibi timor cupiditate averto deserunt trans aequus contabesco advoco et tamquam caelum doloribus dolorem et ut quis capitulus absconditus urbanus cubicularis terebro deinde crepusculum catena vigor vilicus amo tristis aeger administratio vaco vestigium cognomen thesaurus tempora et strenuus vobis acsi adduco sollicito coniuratio aut theatrum decumbo demens.",
+      "image": "https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg?auto=compress&cs=tinysrgb&h=130",
+      "price": 17504,
+      "categories": [
+        14,
+        8,
+        12
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Mediocre Cotton Keyboard",
+      "description": "Vulgivagus thesaurus ventosus subvenio auctus tero adipisci depopulo harum quis culpa cum alo arto vomica admitto adsuesco comprehendo voluptas bis odit ipsa utrimque tracto vestigium dolor vero vicinus agnitio aetas voluptas vespillo supra vesco arceo arbor calcar vix argentum exercitationem maiores thalassinus crepusculum eos accommodo ars qui barba abeo ut autem aufero aveho solvo creber crinis uter deleniti aperiam.",
+      "image": "https://loremflickr.com/250/250",
+      "price": 32013,
+      "discount_amount": "18113.72",
+      "categories": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Synergistic Granite Table",
+      "description": "Tutamen videlicet spiculum antepono sum cura alii cariosus ullam pel adinventitias tyrannus tero vir avarus socius conturbo peior crapula amor volva colloco claro amplexus et quo contabesco cogo adflicto subvenio varius rem solus atavus maxime venustas unus super quia patruus deorsum alioqui conor calamitas et expedita tum usus inventore deleo architecto.",
+      "image": "https://loremflickr.com/250/250",
+      "price": 45367.26,
+      "discount_amount": "1850.62",
+      "categories": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Mediocre Aluminum Chair",
+      "description": "Eligendi cresco desolo vomer celebrer theologus caste denuncio cupressus quia commodi curis villa causa vaco charisma armo sursum reiciendis quo valetudo pel consuasor itaque vulgo aequus arceo distinctio suscipit ut pauci certe acsi curvus.",
+      "image": "https://loremflickr.com/250/250",
+      "price": 21859.92,
+      "discount_amount": "14360.19",
+      "categories": [
+        10,
+        11,
+        12
+      ]
+    }
+  ]
+}

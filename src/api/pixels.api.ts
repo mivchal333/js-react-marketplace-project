@@ -11,10 +11,6 @@ export interface Photo {
     }
 }
 
-export interface PhotoResourceResponse {
-    photos: Photo[]
-}
-
 const fetchImages = (query: string) => axios
     .get(unsplashUrl + '/v1/search', {
         params: {
