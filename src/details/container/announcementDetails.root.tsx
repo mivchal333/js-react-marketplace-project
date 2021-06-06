@@ -11,6 +11,7 @@ import {setSelectedProductId} from "../../store/page/page.slice";
 import {getSelectedAnnouncementId} from "../../store/page/page.selector";
 import {
     Button,
+    ButtonGroup,
     CssBaseline,
     Dialog,
     DialogActions,
@@ -25,6 +26,8 @@ import {getCategories} from '../../store/categories/categories.selector';
 import {Category} from '../../model/category.model';
 import {setCategories, setIsLoading as setIsCategoriesLoading} from "../../store/categories/categories.slice";
 import CategoriesService from '../../service/categories.service';
+import PriceLabel from "../../list/container/tableCell/priceLabel";
+import ProductNotFound from "../component/productNotFound.component";
 
 const AnnouncementDetails = (props: PropsFromRedux) => {
     const {product, selectedAnnouncementId, categories} = props;
@@ -40,7 +43,7 @@ const AnnouncementDetails = (props: PropsFromRedux) => {
         dispatch(setSelectedProductId(productIdNum))
     }, [])
 
-    const loadProductCategories = () =>{
+    const loadProductCategories = () => {
         if (categories && product) {
             let selectedCategories: Category[] = [];
             for (let category of product.categories) {
@@ -61,7 +64,7 @@ const AnnouncementDetails = (props: PropsFromRedux) => {
         setOpen(false);
     };
 
-    useEffect(() =>{
+    useEffect(() => {
         loadProductCategories();
     }, [categories])
 
@@ -84,19 +87,24 @@ const AnnouncementDetails = (props: PropsFromRedux) => {
 
     function handleDelete() {
         setOpen(false);
-        if(selectedAnnouncementId){
+        if (selectedAnnouncementId) {
             ProductService.deleteProduct(selectedAnnouncementId)
                 .then(r => {
-                    if(r.status == 200){
+                    if (r.status == 200) {
                         dispatch(deleteProduct(selectedAnnouncementId));
                         history.push(`/`)
-                    }})
+                    }
+                })
         }
+    }
+
+    if (!product) {
+        return <ProductNotFound/>
     }
     return (
         <>
             <CssBaseline/>
-            <div style={{ padding: 20 }}>
+            <div style={{padding: 20}}>
                 <Grid container spacing={1}>
                     <Grid item xs={12}>
                         <h1>{product?.name}</h1>
@@ -105,15 +113,15 @@ const AnnouncementDetails = (props: PropsFromRedux) => {
                         <img src={product?.image} alt={product?.name}/>
                     </Grid>
                     <Grid item xs={6}>
-                        <Link to={'/edit/' + product?.id}>
-                            <EditIcon/>
-                        </Link>
-                        <DeleteIcon onClick={handleClickOpen}/>
-                        <h3>Price:</h3>
-                        <p>{product?.price} zł</p>
+                        <ButtonGroup color="primary" aria-label="outlined primary button group">
+                            <Button component={Link} to={'/edit/' + product?.id} startIcon={<EditIcon/>}>Edit</Button>
+                            <Button onClick={handleClickOpen} startIcon={<DeleteIcon/>}>Delete</Button>
+                        </ButtonGroup>
+                        <h3>Price</h3>
+                        <PriceLabel product={product}/>
                         <h3>Categories:</h3>
                         <ul>
-                            {productCategories.map((item,i) =>
+                            {productCategories.map((item, i) =>
                                 <li key={i}>{item.name}</li>
                             )}
                         </ul>
@@ -138,10 +146,15 @@ const AnnouncementDetails = (props: PropsFromRedux) => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
-                        No
+                        Cancel
                     </Button>
-                    <Button onClick={handleDelete} color="primary" autoFocus>
-                        Yes
+                    <Button
+                        onClick={handleDelete}
+                        variant="contained"
+                        color="secondary"
+                        startIcon={<DeleteIcon/>}
+                    >
+                        Delete
                     </Button>
                 </DialogActions>
             </Dialog>
