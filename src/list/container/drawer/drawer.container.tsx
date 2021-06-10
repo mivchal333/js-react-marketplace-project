@@ -117,7 +117,7 @@ const DrawerContainer = (props: PropsType) => {
                         <MenuIcon/>
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Dashboard
+                        Products Management
                     </Typography>
                 </Toolbar>
             </AppBar>

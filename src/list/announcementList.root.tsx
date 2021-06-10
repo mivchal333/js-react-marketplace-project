@@ -34,9 +34,7 @@ const AnnouncementList = (props: PropsFromRedux) => {
         if (isEmpty(props.categories)) {
             loadCategories()
         }
-        if (isEmpty(props.products)) {
-            loadProducts()
-        }
+        loadProducts()
     }, [])
 
     return (

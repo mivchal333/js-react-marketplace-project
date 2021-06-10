@@ -30,7 +30,8 @@ const AnnouncementEdit = (props: PropsFromRedux) => {
             description: description,
             image: image,
             price: price,
-            categories: categories
+            categories: categories,
+            updateDate: new Date().valueOf()
         };
         ProductService.updateProduct(productIdRouteParam, myAnnouncement)
             .then(r => {

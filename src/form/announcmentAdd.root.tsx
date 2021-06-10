@@ -21,6 +21,7 @@ const AnnouncmentAdd = () => {
             image: image,
             price: price,
             categories: categories,
+            updateDate: new Date().valueOf()
         };
         ProductService.addProduct(myAnnouncement)
             .then(r => {

@@ -122,6 +122,8 @@ const AnnouncementDetails = (props: PropsFromRedux) => {
                         </ButtonGroup>
                         <h3>Price</h3>
                         <PriceLabel product={product}/>
+                        <h3>Create date:</h3>
+                        <span>{new Date(product.updateDate).toLocaleString()}</span>
                         <h3>Categories:</h3>
                         <ul>
                             {productCategories.map((item, i) =>

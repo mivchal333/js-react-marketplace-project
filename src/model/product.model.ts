@@ -5,6 +5,7 @@ export interface Product {
     image: string,
     price: number,
     categories: number[],
+    updateDate: number,
 }
 
 export interface CreateProductPayload {
@@ -13,4 +14,5 @@ export interface CreateProductPayload {
     image: string,
     price: number,
     categories: number[],
+    updateDate: number,
 }
