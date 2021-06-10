@@ -104,9 +104,8 @@
       "image": "https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg?auto=compress&cs=tinysrgb&h=130",
       "price": 17504,
       "categories": [
-        14,
         8,
-        12
+        13
       ]
     },
     {
@@ -131,17 +130,6 @@
         5
       ],
       "id": 8
-    },
-    {
-      "id": 9,
-      "name": "aparat1223",
-      "description": "d1",
-      "image": "https://images.pexels.com/photos/821651/pexels-photo-821651.jpeg?auto=compress&cs=tinysrgb&h=130",
-      "price": "2",
-      "categories": [
-        1,
-        5
-      ]
     },
     {
       "name": "kanapka",

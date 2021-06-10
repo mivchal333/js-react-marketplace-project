@@ -6,9 +6,10 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {CardMedia, createStyles, GridList, GridListTile, Theme} from "@material-ui/core";
+import {CardMedia, CircularProgress, createStyles, GridList, GridListTile, Theme} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import ImageIcon from '@material-ui/icons/Image';
+import {isEmpty} from "lodash-es";
 
 interface Props {
     onChange: (event: any) => void,
@@ -44,19 +45,25 @@ const PhotoField = (props: Props) => {
     const [query, setQuery] = useState('');
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [photoOptions, setPhotoOptions] = useState<string[]>([])
+    const [isLoading, setIsLoading] = useState(false)
 
-    useEffect(() => {
-        PhotoService.loadPhotos(props.productName)
-            .then(photos => {
-                setPhotoOptions(photos)
-            })
-    }, [])
 
-    const onInputChange = (query: string) => {
+    const loadPhotos = (query: string) => {
+        setIsLoading(true)
         PhotoService.loadPhotos(query)
             .then(photos => {
                 setPhotoOptions(photos)
+                setIsLoading(false)
             })
+
+    }
+    useEffect(() => {
+        loadPhotos(props.productName || 'Product')
+    }, [])
+
+    const onInputChange = (query: string) => {
+        loadPhotos(query)
+        setQuery(query);
     }
 
     const onDialogClose = () => setIsDialogOpen(false);
@@ -96,10 +103,15 @@ const PhotoField = (props: Props) => {
                         value={query}
                         onChange={(e) => {
                             const {value} = e.target;
-                            setQuery(value);
                             onInputChange(value);
                         }}
                     />
+                    {isLoading && (
+                        <CircularProgress/>
+                    )}
+                    {isEmpty(photoOptions) && (
+                        <p>No results</p>
+                    )}
                     <GridList cellHeight={160} className={classes.gridList} cols={3}>
                         {photoOptions.map((imageSrc) => (
                             <GridListTile
