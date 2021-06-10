@@ -38,7 +38,7 @@ const ProductsTableContainer = (props: PropsFromRedux) => {
         usePagination
     )
     return (
-        <div>
+        <div style={{padding: "2em"}}>
             <div style={{display: "flex", alignItems: "center"}}>
                 <GlobalFilter globalFilter={state.globalFilter} setGlobalFilter={setGlobalFilter}/>
                 <CategoryField setFilter={setFilter}/>

@@ -142,6 +142,36 @@
         8
       ],
       "id": 10
+    },
+    {
+      "name": "phone",
+      "description": "example phone",
+      "image": "https://images.pexels.com/photos/1260239/pexels-photo-1260239.jpeg?auto=compress&cs=tinysrgb&h=130",
+      "price": "99.99",
+      "categories": [
+        19
+      ],
+      "id": 11
+    },
+    {
+      "name": "phone",
+      "description": "example phone 2",
+      "image": "https://images.pexels.com/photos/947407/pexels-photo-947407.jpeg?auto=compress&cs=tinysrgb&h=130",
+      "price": "101",
+      "categories": [
+        2
+      ],
+      "id": 12
+    },
+    {
+      "name": "tablet",
+      "description": "tablet1",
+      "image": "https://images.pexels.com/photos/4300393/pexels-photo-4300393.png?auto=compress&cs=tinysrgb&h=130",
+      "price": "101",
+      "categories": [
+        5
+      ],
+      "id": 13
     }
   ]
 }
