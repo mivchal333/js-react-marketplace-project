@@ -105,11 +105,12 @@ const PhotoField = (props: Props) => {
                             const {value} = e.target;
                             onInputChange(value);
                         }}
+                        autoComplete="off"
                     />
                     {isLoading && (
                         <CircularProgress/>
                     )}
-                    {isEmpty(photoOptions) && (
+                    {isEmpty(photoOptions) && (!isLoading) && (
                         <p>No results</p>
                     )}
                     <GridList cellHeight={160} className={classes.gridList} cols={3}>
